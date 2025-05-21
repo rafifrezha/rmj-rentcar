@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RMJ RentCar - Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-light" style="padding-top: 100px">
+    <nav
+      id="mainNavbar"
+      class="navbar navbar-expand-lg navbar-dark custom-navbar shadow fixed-top"
+      style="background: #1a2236; height: 80px; z-index: 100"
+    >
+      <div
+        class="container-fluid px-4 justify-content-center position-relative"
+      >
+        <ul
+          class="navbar-nav flex-row align-items-center position-absolute start-0 ms-4"
+          style="top: 50%; transform: translateY(-50%)"
+        >
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              href="main.html"
+              style="font-size: 1.1rem; color: #fff; font-weight: 600"
+              >Menu</a
+            >
+          </li>
+          <li class="nav-item ms-3">
+            <a
+              class="nav-link"
+              href="main.html#cars_by_brand"
+              style="font-size: 1.1rem; color: #bfc9d1"
+              >Book</a
+            >
+          </li>
+          <li class="nav-item ms-3">
+            <a
+              class="nav-link"
+              href="history.html"
+              style="font-size: 1.1rem; color: #bfc9d1"
+              >History</a
+            >
+          </li>
+        </ul>
+        <a
+          class="navbar-brand mx-auto d-flex align-items-center justify-content-center"
+          href="#"
+          style="font-size: 2.1rem; color: #fff; letter-spacing: 1px"
+        >
+          <img
+            src="assets/logo-rmj.png"
+            alt="Logo"
+            style="height: 64px; margin-right: 0"
+          />
+        </a>
+        <div
+          class="d-flex align-items-center position-absolute end-0 me-4"
+          style="top: 50%; transform: translateY(-50%)"
+        >
+          <div
+            class="user-badge d-flex align-items-center px-3 py-2 me-3"
+            style="
+              background: #697290;
+              border-radius: 16px;
+              color: #fff;
+              font-weight: 600;
+              font-size: 1rem;
+            "
+          >
+            <svg
+              width="20"
+              height="20"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              style="margin-right: 8px"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 8-4 8-4s8 0 8 4" />
+            </svg>
+            <span id="navbarUsername">Welcome, User!</span>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              style="margin-left: 8px"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+          <a
+            class="btn btn-booknow"
+            href="main.html#cars_by_brand"
+            style="
+              background: #1cc6ea;
+              color: #fff;
+              font-weight: 600;
+              border-radius: 22px;
+              padding: 8px 28px;
+              font-size: 1.1rem;
+              box-shadow: none;
+            "
+            >Book Now</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <img
+        src="assets/Banner.png"
+        alt="Hero Banner"
+        class="img-fluid w-100"
+        style="
+          border-radius: 18px;
+          max-width: 85%;
+          height: auto;
+          display: block;
+        "
+      />
+    </section>
+
+    <div class="container py-5">
+      <h2 class="mb-4 text-primary fw-bold">Daftar Mobil Tersedia</h2>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <input
+            type="text"
+            id="searchAll"
+            class="form-control"
+            placeholder="Cari Brand, Model, atau Tahun..."
+          />
+        </div>
+      </div>
+      <div id="cars_by_brand"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
+      }
+      // Set username in navbar
+      const user = JSON.parse(localStorage.getItem("user"));
+      document.getElementById("navbarUsername").textContent =
+        user && user.username ? user.username : "User";
+
+      let carsData = [];
+      const carsByBrandDiv = document.getElementById("cars_by_brand");
+
+      async function getCars() {
+        try {
+          const res = await fetch("http://localhost:5000/cars");
+          if (!res.ok) throw new Error("Gagal mengambil data mobil");
+          return await res.json();
+        } catch (err) {
+          carsByBrandDiv.innerHTML = `<div class="col-12"><div class="alert alert-danger text-center">Tidak dapat mengambil data mobil dari server.</div></div>`;
+          return [];
+        }
+      }
+
+      function renderCarsByBrand(list) {
+        carsByBrandDiv.innerHTML = "";
+        const keyword = document
+          .getElementById("searchAll")
+          .value.toLowerCase();
+        // Filter available cars
+        let filtered = list.filter(
+          (car) => car.availability === true || car.availability === 1
+        );
+        if (keyword) {
+          filtered = filtered.filter(
+            (car) =>
+              car.brand.toLowerCase().includes(keyword) ||
+              car.model.toLowerCase().includes(keyword) ||
+              String(car.year).includes(keyword)
+          );
+        }
+        if (!filtered.length) {
+          carsByBrandDiv.innerHTML = `<div class="col-12"><div class="alert alert-warning text-center">Tidak ada data mobil tersedia.</div></div>`;
+          return;
+        }
+        // Group by brand
+        const brands = Array.from(new Set(filtered.map((car) => car.brand)));
+        for (const brand of brands) {
+          const cars = filtered.filter((car) => car.brand === brand);
+          let rowHtml = `
+        <div class="mb-4">
+          <h4 class="mb-3" style="color:#00e09e;font-weight:600;">${brand}</h4>
+          <div class="row g-4">
+      `;
+          for (const car of cars) {
+            rowHtml += `
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow h-100">
+              <div style="width:100%;aspect-ratio:16/9;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#232b3e;">
+                <img src="${
+                  car.url_photo ||
+                  "https://via.placeholder.com/400x200?text=No+Image"
+                }" class="card-img-top" alt="car photo" style="width:100%;height:100%;object-fit:contain;object-position:center;">
+              </div>
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${car.brand} ${car.model}</h5>
+                <ul class="list-group list-group-flush mb-3">
+                  <li class="list-group-item">Tahun: <b>${car.year}</b></li>
+                  <li class="list-group-item">Plat: <b>${
+                    car.license_plate
+                  }</b></li>
+                  <li class="list-group-item">Harga/Hari: <span class="badge bg-primary">Rp${
+                    car.price_per_day
+                  }</span></li>
+                </ul>
+                <a
+                  href="rental.html?car_id=${car.car_id}"
+                  class="btn btn-outline-primary mt-auto w-100"
+                >Sewa Mobil</a>
+              </div>
+            </div>
+          </div>
+        `;
+          }
+          rowHtml += `</div></div>`;
+          carsByBrandDiv.insertAdjacentHTML("beforeend", rowHtml);
+        }
+      }
+
+      async function loadCars() {
+        carsData = await getCars();
+        renderCarsByBrand(carsData);
+      }
+      loadCars();
+
+      document.getElementById("searchAll").oninput = function () {
+        renderCarsByBrand(carsData);
+      };
+    </script>
+    <style>
+      /* ...existing code... */
+      .custom-dropdown {
+        background: #232b3e !important;
+        border-radius: 10px;
+        min-width: 160px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+        border: none;
+      }
+      .custom-dropdown .dropdown-item {
+        color: #e0e6ed !important;
+        font-weight: 500;
+        background: transparent;
+        transition: background 0.2s, color 0.2s;
+      }
+      .custom-dropdown .dropdown-item:hover,
+      .custom-dropdown .dropdown-item:focus {
+        background: #00e09e !important;
+        color: #1a2236 !important;
+      }
+      .navbar-brand:hover,
+      .navbar-brand:focus {
+        color: #fff !important;
+        background: none !important;
+        text-decoration: none !important;
+        cursor: default !important;
+      }
+    </style>
+  </body>
+</html>
