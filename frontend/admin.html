@@ -19,6 +19,7 @@
         window.location.href = "index.html";
       }
     </script>
+<<<<<<< HEAD
     <nav
       id="mainNavbar"
       class="navbar navbar-expand-lg navbar-dark custom-navbar shadow fixed-top"
@@ -145,11 +146,43 @@
             "
             >Book Now</a
           >
+=======
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">RMJ RentCar</a>
+        <div class="d-flex align-items-center">
+          <a class="btn btn-outline-light me-2" href="main.html">Home</a>
+          <a class="btn btn-outline-light me-2" href="history.html"
+            >Order History</a
+          >
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-light dropdown-toggle"
+              type="button"
+              id="profileDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Hello, <span id="navbarUsername">User</span>
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end custom-dropdown"
+              aria-labelledby="profileDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+              </li>
+            </ul>
+          </div>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
         </div>
       </div>
     </nav>
     <div class="container py-5">
+<<<<<<< HEAD
       <div style="height: 42px"></div>
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
       <div class="mb-4 d-flex justify-content-between align-items-center">
         <h2 class="custom-text mb-0">Data Mobil</h2>
         <a href="addCar.html" class="btn btn-primary">Tambah Mobil</a>
@@ -177,6 +210,7 @@
 
       <div class="mb-4 d-flex justify-content-between align-items-center">
         <h2 class="custom-text mb-0">Data Rental</h2>
+<<<<<<< HEAD
         <!-- <a href="addRental.html" class="btn btn-primary">Tambah Rental</a> -->
       </div>
       <div class="card p-3" style="background: #232b3e; border-radius: 18px">
@@ -281,6 +315,27 @@
               <tbody id="rental_items"></tbody>
             </table>
           </div>
+=======
+        <a href="addRental.html" class="btn btn-primary">Tambah Rental</a>
+      </div>
+      <div class="card p-3">
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead>
+              <tr>
+                <th>ID Rental</th>
+                <th>User</th>
+                <th>Mobil</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
+                <th>Total Harga</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="rental_items"></tbody>
+          </table>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
         </div>
       </div>
     </div>
@@ -291,12 +346,18 @@
 
       const getCars = async () => {
         try {
+<<<<<<< HEAD
           const response = await fetch(
             "https://rmjrentcar-86067911510.asia-southeast2.run.app/cars",
             {
               method: "GET",
             }
           );
+=======
+          const response = await fetch("http://localhost:5000/cars", {
+            method: "GET",
+          });
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           if (!response.ok)
             throw new Error(`HTTP error! status: ${response.status}`);
           return await response.json();
@@ -308,12 +369,18 @@
 
       const getRentals = async () => {
         try {
+<<<<<<< HEAD
           const response = await fetch(
             "https://rmjrentcar-86067911510.asia-southeast2.run.app/rentals",
             {
               method: "GET",
             }
           );
+=======
+          const response = await fetch("http://localhost:5000/rentals", {
+            method: "GET",
+          });
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           if (!response.ok)
             throw new Error(`HTTP error! status: ${response.status}`);
           return await response.json();
@@ -325,12 +392,18 @@
 
       const getUsers = async () => {
         try {
+<<<<<<< HEAD
           const response = await fetch(
             "https://rmjrentcar-86067911510.asia-southeast2.run.app/users",
             {
               method: "GET",
             }
           );
+=======
+          const response = await fetch("http://localhost:5000/users", {
+            method: "GET",
+          });
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           if (!response.ok)
             throw new Error(`HTTP error! status: ${response.status}`);
           return await response.json();
@@ -384,19 +457,28 @@
           const carObj = cars.find(
             (c) => String(c.car_id) === String(rental.car_id)
           );
+<<<<<<< HEAD
           // Tentukan badge class sesuai status
           let badgeClass = "bg-secondary";
           if (rental.status === "ongoing") badgeClass = "bg-warning text-dark";
           else if (rental.status === "completed") badgeClass = "bg-success";
           else if (rental.status === "cancelled") badgeClass = "bg-danger";
           else if (rental.status === "reserved") badgeClass = "bg-secondary";
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           rentalTable.insertAdjacentHTML(
             "beforeend",
             `
             <tr>
                 <td>${rental.rental_id}</td>
                 <td>${rental.user_id}</td>
+<<<<<<< HEAD
                 <!-- <td>${userObj ? userObj.username : "-"}</td> -->
+=======
+                <!-- <td>${
+                  userObj ? userObj.username : "-"
+                }</td> --> <!-- Hapus data Nama User -->
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
                 <td>${
                   carObj ? carObj.brand + " " + carObj.model : rental.car_id
                 }</td>
@@ -404,6 +486,7 @@
                 <td>${rental.rental_end_date}</td>
                 <td>Rp${rental.total_price}</td>
                 <td>
+<<<<<<< HEAD
                   <div class="dropdown" style="position:static;">
                     <button class="badge ${badgeClass} dropdown-toggle rental-status-badge" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="min-width:120px;text-transform:capitalize;">
                       ${rental.status}
@@ -428,11 +511,29 @@
                   <button onclick='deleteRental(${
                     rental.rental_id
                   })' class="btn btn-danger btn-sm">Hapus</button>
+=======
+                    <span class="badge ${
+                      rental.status === "completed"
+                        ? "bg-success"
+                        : rental.status === "ongoing"
+                        ? "bg-warning text-dark"
+                        : "bg-secondary"
+                    }">${rental.status}</span>
+                </td>
+                <td>
+                    <button onclick='editRental(${
+                      rental.rental_id
+                    })' class="btn btn-success btn-sm me-1">Edit</button>
+                    <button onclick='deleteRental(${
+                      rental.rental_id
+                    })' class="btn btn-danger btn-sm">Hapus</button>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
                 </td>
             </tr>
             `
           );
         }
+<<<<<<< HEAD
 
         // Tambahkan event listener untuk dropdown status
         document.querySelectorAll(".rental-status-option").forEach((item) => {
@@ -468,6 +569,8 @@
             }
           });
         });
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
       };
 
       window.editCar = (car_id) => {
@@ -476,12 +579,18 @@
       };
       window.deleteCar = async (car_id) => {
         if (confirm("Yakin ingin menghapus mobil ini?")) {
+<<<<<<< HEAD
           await fetch(
             `https://rmjrentcar-86067911510.asia-southeast2.run.app/cars/delete/${car_id}`,
             {
               method: "DELETE",
             }
           );
+=======
+          await fetch(`http://localhost:5000/cars/delete/${car_id}`, {
+            method: "DELETE",
+          });
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           buildCarTable();
         }
       };
@@ -491,12 +600,18 @@
       };
       window.deleteRental = async (rental_id) => {
         if (confirm("Yakin ingin menghapus rental ini?")) {
+<<<<<<< HEAD
           await fetch(
             `https://rmjrentcar-86067911510.asia-southeast2.run.app/rentals/delete/${rental_id}`,
             {
               method: "DELETE",
             }
           );
+=======
+          await fetch(`http://localhost:5000/rentals/delete/${rental_id}`, {
+            method: "DELETE",
+          });
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           buildRentalTable();
         }
       };
@@ -534,6 +649,7 @@
         background: #00e09e !important;
         color: #1a2236 !important;
       }
+<<<<<<< HEAD
       .table thead th {
         vertical-align: middle !important;
         text-align: center !important;
@@ -598,6 +714,8 @@
         background: #00e09e !important;
         color: #1a2236 !important;
       }
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
     </style>
   </body>
 </html>

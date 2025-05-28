@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="login-bg">
+<<<<<<< HEAD
     <nav
       id="mainNavbar"
       class="navbar navbar-expand-lg navbar-dark custom-navbar shadow fixed-top"
@@ -60,6 +61,8 @@
       </div>
     </nav>
     <div style="height: 42px"></div>
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
     <div
       class="login-main"
       style="
@@ -232,6 +235,7 @@
           password: document.getElementById("password").value,
         };
         try {
+<<<<<<< HEAD
           const res = await fetch(
             "https://rmjrentcar-86067911510.asia-southeast2.run.app/login",
             {
@@ -240,6 +244,13 @@
               body: JSON.stringify(body),
             }
           );
+=======
+          const res = await fetch("http://localhost:5000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           const result = await res.json();
           if (result.message === "Login Berhasil") {
             localStorage.setItem("user", JSON.stringify(result.user));

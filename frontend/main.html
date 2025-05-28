@@ -60,6 +60,7 @@
           />
         </a>
         <div
+<<<<<<< HEAD
           class="d-flex align-items-center position-absolute end-0"
           style="top: 50%; transform: translateY(-50%); gap: 18px"
         >
@@ -136,12 +137,20 @@
           <!-- User badge with icon and logout -->
           <div
             class="user-badge d-flex align-items-center px-3 py-2"
+=======
+          class="d-flex align-items-center position-absolute end-0 me-4"
+          style="top: 50%; transform: translateY(-50%)"
+        >
+          <div
+            class="user-badge d-flex align-items-center px-3 py-2 me-3"
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
             style="
               background: #697290;
               border-radius: 16px;
               color: #fff;
               font-weight: 600;
               font-size: 1rem;
+<<<<<<< HEAD
               margin-right: 12px;
               gap: 8px;
             "
@@ -149,16 +158,28 @@
             <svg
               width="22"
               height="22"
+=======
+            "
+          >
+            <svg
+              width="20"
+              height="20"
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
               fill="none"
               stroke="#fff"
               stroke-width="2"
               viewBox="0 0 24 24"
+<<<<<<< HEAD
               style="margin-right: 4px"
+=======
+              style="margin-right: 8px"
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
             >
               <circle cx="12" cy="8" r="4" />
               <path d="M4 20c0-4 8-4 8-4s8 0 8 4" />
             </svg>
             <span id="navbarUsername">Welcome, User!</span>
+<<<<<<< HEAD
             <button
               onclick="logout()"
               title="Logout"
@@ -187,6 +208,19 @@
                 />
               </svg>
             </button>
+=======
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              style="margin-left: 8px"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           </div>
           <a
             class="btn btn-booknow"
@@ -222,6 +256,7 @@
     </section>
 
     <div class="container py-5">
+<<<<<<< HEAD
       <h2 class="mb-4 fw-bold" style="color: #fff">Daftar Mobil Tersedia</h2>
       <hr
         style="
@@ -232,6 +267,19 @@
           width: 350px;
         "
       />
+=======
+      <h2 class="mb-4 text-primary fw-bold">Daftar Mobil Tersedia</h2>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <input
+            type="text"
+            id="searchAll"
+            class="form-control"
+            placeholder="Cari Brand, Model, atau Tahun..."
+          />
+        </div>
+      </div>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
       <div id="cars_by_brand"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -250,9 +298,13 @@
 
       async function getCars() {
         try {
+<<<<<<< HEAD
           const res = await fetch(
             "https://rmjrentcar-86067911510.asia-southeast2.run.app/cars"
           );
+=======
+          const res = await fetch("http://localhost:5000/cars");
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           if (!res.ok) throw new Error("Gagal mengambil data mobil");
           return await res.json();
         } catch (err) {
@@ -288,7 +340,11 @@
           const cars = filtered.filter((car) => car.brand === brand);
           let rowHtml = `
         <div class="mb-4">
+<<<<<<< HEAD
           <h4 class="mb-3" style="color:#fff;font-weight:600;">${brand}</h4>
+=======
+          <h4 class="mb-3" style="color:#00e09e;font-weight:600;">${brand}</h4>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           <div class="row g-4">
       `;
           for (const car of cars) {
@@ -314,6 +370,7 @@
                 </ul>
                 <a
                   href="rental.html?car_id=${car.car_id}"
+<<<<<<< HEAD
                   class="btn btn-gradient mt-auto w-100"
                   style="
                     background: linear-gradient(90deg, #3a4e79 0%, #5a6f9b 100%);
@@ -327,6 +384,9 @@
                   "
                   onmouseover="this.style.background='linear-gradient(90deg, #5a6f9b 0%, #3a4e79 100%)';"
                   onmouseout="this.style.background='linear-gradient(90deg, #3a4e79 0%, #5a6f9b 100%)';"
+=======
+                  class="btn btn-outline-primary mt-auto w-100"
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
                 >Sewa Mobil</a>
               </div>
             </div>
@@ -344,13 +404,17 @@
       }
       loadCars();
 
+<<<<<<< HEAD
       // Event handler search langsung di navbar
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
       document.getElementById("searchAll").oninput = function () {
         renderCarsByBrand(carsData);
       };
     </script>
     <style>
       /* ...existing code... */
+<<<<<<< HEAD
       #searchAll:focus {
         outline: none;
         border: none;
@@ -380,6 +444,33 @@
         vertical-align: middle;
       }
       /* ...existing code... */
+=======
+      .custom-dropdown {
+        background: #232b3e !important;
+        border-radius: 10px;
+        min-width: 160px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+        border: none;
+      }
+      .custom-dropdown .dropdown-item {
+        color: #e0e6ed !important;
+        font-weight: 500;
+        background: transparent;
+        transition: background 0.2s, color 0.2s;
+      }
+      .custom-dropdown .dropdown-item:hover,
+      .custom-dropdown .dropdown-item:focus {
+        background: #00e09e !important;
+        color: #1a2236 !important;
+      }
+      .navbar-brand:hover,
+      .navbar-brand:focus {
+        color: #fff !important;
+        background: none !important;
+        text-decoration: none !important;
+        cursor: default !important;
+      }
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
     </style>
   </body>
 </html>

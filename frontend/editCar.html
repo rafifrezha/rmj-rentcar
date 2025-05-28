@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="bg-light">
+<<<<<<< HEAD
     <nav
       id="mainNavbar"
       class="navbar navbar-expand-lg navbar-dark custom-navbar shadow fixed-top"
@@ -171,6 +172,35 @@
             "
             >Book Now</a
           >
+=======
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">RMJ RentCar</a>
+        <div class="d-flex align-items-center">
+          <a class="btn btn-outline-light me-2" href="main.html">Home</a>
+          <a class="btn btn-outline-light me-2" href="history.html"
+            >Order History</a
+          >
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-light dropdown-toggle"
+              type="button"
+              id="profileDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Hello, <span id="navbarUsername">User</span>
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-end custom-dropdown"
+              aria-labelledby="profileDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+              </li>
+            </ul>
+          </div>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
         </div>
       </div>
     </nav>
@@ -290,9 +320,13 @@
           return;
         }
         try {
+<<<<<<< HEAD
           const res = await fetch(
             `https://rmjrentcar-86067911510.asia-southeast2.run.app/cars/detail/${carId}`
           );
+=======
+          const res = await fetch(`http://localhost:5000/cars/detail/${carId}`);
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           if (!res.ok) throw new Error("Gagal mengambil data mobil");
           const data = await res.json();
           const car = data[0];
@@ -328,7 +362,11 @@
         };
         try {
           const res = await fetch(
+<<<<<<< HEAD
             `https://rmjrentcar-86067911510.asia-southeast2.run.app/cars/update/${carId}`,
+=======
+            `http://localhost:5000/cars/update/${carId}`,
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
             {
               method: "PUT",
               headers: { "Content-Type": "application/json" },

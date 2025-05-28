@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
+<<<<<<< HEAD
   <body class="bg-light" style="padding-top: 100px">
     <nav
       id="mainNavbar"
@@ -165,6 +166,21 @@
             "
             >Login</a
           >
+=======
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+          <img
+            src="assets/logo-rmj.png"
+            alt="Logo"
+            style="height: 40px; margin-right: 12px"
+          />
+          RMJ RentCar
+        </a>
+        <div>
+          <a class="btn btn-warning" href="login.html">Login</a>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
         </div>
       </div>
     </nav>
@@ -185,6 +201,7 @@
     </section>
 
     <div class="container py-5">
+<<<<<<< HEAD
       <h2 class="mb-4 fw-bold" style="color: #fff">Daftar Mobil Tersedia</h2>
       <hr
         style="
@@ -196,12 +213,68 @@
         "
       />
       <div id="cars_by_brand"></div>
+=======
+      <h2 class="mb-4 text-primary fw-bold">Daftar Mobil</h2>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <input
+            type="text"
+            id="searchAll"
+            class="form-control"
+            placeholder="Cari Brand, Model, atau Tahun..."
+          />
+        </div>
+      </div>
+      <div id="car_grid" class="row g-4"></div>
+    </div>
+
+    <!-- Modal Login -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form class="modal-content" id="form_login">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label>Username</label>
+              <input type="text" class="form-control" id="username" required />
+            </div>
+            <div class="mb-3">
+              <label>Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary w-100" type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       // --- Mobil Grid & Filter ---
       let carsData = [];
+<<<<<<< HEAD
       const carsByBrandDiv = document.getElementById("cars_by_brand");
       async function getCars() {
         try {
@@ -247,6 +320,26 @@
       `;
           for (const car of cars) {
             rowHtml += `
+=======
+      const carGrid = document.getElementById("car_grid");
+      async function getCars() {
+        const res = await fetch("http://localhost:5000/cars");
+        return await res.json();
+      }
+      function renderCars(list) {
+        carGrid.innerHTML = "";
+        const availableCars = list.filter(
+          (car) => car.availability === true || car.availability === 1
+        );
+        if (!availableCars || availableCars.length === 0) {
+          carGrid.innerHTML = `<div class="col-12"><div class="alert alert-warning text-center">Tidak ada data mobil tersedia.</div></div>`;
+          return;
+        }
+        for (const car of availableCars) {
+          carGrid.insertAdjacentHTML(
+            "beforeend",
+            `
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card shadow h-100">
               <div style="width:100%;aspect-ratio:16/9;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#232b3e;">
@@ -266,6 +359,7 @@
                     car.price_per_day
                   }</span></li>
                 </ul>
+<<<<<<< HEAD
                 <a
                   href="login.html"
                   class="btn btn-gradient mt-auto w-100"
@@ -289,20 +383,69 @@
           }
           rowHtml += `</div></div>`;
           carsByBrandDiv.insertAdjacentHTML("beforeend", rowHtml);
+=======
+              </div>
+            </div>
+          </div>
+        `
+          );
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
         }
       }
       async function loadCars() {
         carsData = await getCars();
+<<<<<<< HEAD
         renderCarsByBrand(carsData);
       }
       loadCars();
 
       document.getElementById("searchAll").oninput = function () {
         renderCarsByBrand(carsData);
+=======
+        renderCars(carsData);
+      }
+      loadCars();
+
+      // --- Single Search ---
+      document.getElementById("searchAll").oninput = function () {
+        const keyword = document
+          .getElementById("searchAll")
+          .value.toLowerCase();
+        const filtered = carsData.filter(
+          (car) =>
+            (car.availability === true || car.availability === 1) &&
+            (car.brand.toLowerCase().includes(keyword) ||
+              car.model.toLowerCase().includes(keyword) ||
+              String(car.year).includes(keyword))
+        );
+        renderCars(filtered);
+      };
+
+      // --- Login ---
+      document.getElementById("form_login").onsubmit = async (e) => {
+        e.preventDefault();
+        const body = {
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+        };
+        const res = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const result = await res.json();
+        if (result.message === "Login Berhasil") {
+          localStorage.setItem("user", JSON.stringify(result.user));
+          window.location.href = "dashboard.html";
+        } else {
+          alert(result.message || "Login gagal");
+        }
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
       };
     </script>
     <style>
       /* ...existing code... */
+<<<<<<< HEAD
       #searchAll:focus {
         outline: none;
         border: none;
@@ -331,6 +474,8 @@
         font-size: 1.08rem;
         vertical-align: middle;
       }
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
       .custom-dropdown {
         background: #232b3e !important;
         border-radius: 10px;
@@ -349,6 +494,7 @@
         background: #00e09e !important;
         color: #1a2236 !important;
       }
+<<<<<<< HEAD
       .navbar-brand:hover,
       .navbar-brand:focus {
         color: #fff !important;
@@ -356,6 +502,8 @@
         text-decoration: none !important;
         cursor: default !important;
       }
+=======
+>>>>>>> f574b70bfa51830aa3afbbf1fb739e7e725c4b00
     </style>
   </body>
 </html>
