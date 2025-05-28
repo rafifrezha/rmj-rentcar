@@ -294,6 +294,45 @@
         background: #00e09e !important;
         color: #1a2236 !important;
       }
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+      }
+      input[type="date"]::-ms-input-placeholder {
+        color: #fff;
+      }
+      input[type="date"]::-webkit-input-placeholder {
+        color: #fff;
+      }
+      input[type="date"]::-moz-placeholder {
+        color: #fff;
+      }
+      input[type="date"]:-ms-input-placeholder {
+        color: #fff;
+      }
+      input[type="date"]::placeholder {
+        color: #fff;
+      }
+      input[type="date"] {
+        color-scheme: dark;
+        background: #232b3e;
+        color: #fff;
+        border: 1px solid #697290;
+      }
     </style>
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        const badge = document.querySelector(".user-badge");
+        if (badge && !badge.querySelector(".logout-btn")) {
+          const btn = document.createElement("button");
+          btn.className = "logout-btn btn btn-link btn-sm";
+          btn.style.cssText =
+            "color:#fff;margin-left:8px;padding:0 4px 0 4px;font-size:1rem;text-decoration:none;";
+          btn.title = "Logout";
+          btn.innerHTML = `<svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle"><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/><path d="M12 19v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v2"/></svg>`;
+          btn.onclick = logout;
+          badge.appendChild(btn);
+        }
+      });
+    </script>
   </body>
 </html>
