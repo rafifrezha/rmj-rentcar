@@ -188,7 +188,7 @@
             <table
               class="table table-bordered align-middle table-striped"
               style="
-                min-width: 900px;
+                min-width: 1000px;
                 background: #232b3e;
                 border-radius: 12px;
                 overflow: visible;
@@ -214,7 +214,17 @@
                       font-weight: 700;
                     "
                   >
-                    User
+                    Username
+                  </th>
+                  <th
+                    style="
+                      vertical-align: middle;
+                      text-align: center;
+                      color: #00e09e;
+                      font-weight: 700;
+                    "
+                  >
+                    Foto Mobil
                   </th>
                   <th
                     style="
@@ -377,26 +387,26 @@
         const cars = await getCars();
         rentalTable.innerHTML = "";
         for (const rental of rentals) {
-          // Cari user berdasarkan user_id pada tabel users
-          const userObj = users.find(
-            (u) => String(u.user_id) === String(rental.user_id)
-          );
+          const userid = rental.user_id;
           const carObj = cars.find(
             (c) => String(c.car_id) === String(rental.car_id)
           );
+          const carPhoto =
+            carObj && carObj.url_photo
+              ? `<img src="${carObj.url_photo}" alt="foto mobil" style="width:70px;height:45px;object-fit:cover;border-radius:6px;">`
+              : `<span style="color:#aaa;">-</span>`;
           // Tentukan badge class sesuai status
           let badgeClass = "bg-secondary";
           if (rental.status === "ongoing") badgeClass = "bg-warning text-dark";
           else if (rental.status === "completed") badgeClass = "bg-success";
-          else if (rental.status === "cancelled") badgeClass = "bg-danger";
           else if (rental.status === "reserved") badgeClass = "bg-secondary";
           rentalTable.insertAdjacentHTML(
             "beforeend",
             `
             <tr>
                 <td>${rental.rental_id}</td>
-                <td>${rental.user_id}</td>
-                <!-- <td>${userObj ? userObj.username : "-"}</td> -->
+                <td>${userid}</td>
+                <td>${carPhoto}</td>
                 <td>${
                   carObj ? carObj.brand + " " + carObj.model : rental.car_id
                 }</td>
@@ -418,9 +428,6 @@
                       <li><a class="dropdown-item rental-status-option" href="#" data-id="${
                         rental.rental_id
                       }" data-status="completed">Completed</a></li>
-                      <li><a class="dropdown-item rental-status-option" href="#" data-id="${
-                        rental.rental_id
-                      }" data-status="cancelled">Cancelled</a></li>
                     </ul>
                   </div>
                 </td>
