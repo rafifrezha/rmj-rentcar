@@ -312,15 +312,19 @@
       }
       window.cancelRental = async (rental_id) => {
         if (confirm("Yakin ingin membatalkan rental ini?")) {
-          await fetch(
-            `https://rmjrentcar-86067911510.asia-southeast2.run.app/rentals/update/${rental_id}`,
-            {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ status: "cancelled" }),
-            }
-          );
-          buildHistory();
+          // Hapus rental dari database
+          try {
+            const res = await fetch(
+              `https://rmjrentcar-86067911510.asia-southeast2.run.app/rentals/delete/${rental_id}`,
+              {
+                method: "DELETE",
+              }
+            );
+            if (!res.ok) throw new Error("Gagal membatalkan rental");
+            buildHistory();
+          } catch (err) {
+            alert("Gagal membatalkan rental");
+          }
         }
       };
       buildHistory();
